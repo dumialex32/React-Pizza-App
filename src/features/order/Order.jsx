@@ -1,3 +1,7 @@
+/* eslint-disable react-refresh/only-export-components */
+import { useLoaderData, useNavigation } from "react-router-dom";
+import { getOrder } from "../../services/apiRestaurant";
+
 // Test ID: IIDSAT
 
 import {
@@ -43,6 +47,10 @@ const order = {
 
 function Order() {
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
+
+  const order = useLoaderData();
+
+
   const {
     id,
     status,
@@ -52,6 +60,7 @@ function Order() {
     estimatedDelivery,
     cart,
   } = order;
+
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (
@@ -60,7 +69,7 @@ function Order() {
         <h2>Status</h2>
 
         <div>
-          {priority && <span>Priority</span>}
+          {priority && <span>Priority: </span>}
           <span>{status} order</span>
         </div>
       </div>
@@ -84,3 +93,11 @@ function Order() {
 }
 
 export default Order;
+
+export async function loader({ params }) {
+  console.log(params);
+  console.log(params.orderId);
+  const order = await getOrder(params.orderId);
+  console.log(order);
+  return order;
+}
