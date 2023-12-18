@@ -2,7 +2,7 @@ import SearchOrder from "../features/order/SearchOrder";
 
 function Header() {
   return (
-    <div>
+    <div className="bg-yellow-500"> 
       <h1>Fast React Pizza</h1>
       <SearchOrder />
     </div>

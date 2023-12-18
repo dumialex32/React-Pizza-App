@@ -1,6 +1,13 @@
+/* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/no-unescaped-entities */
 import { useState } from "react";
-import { Form, redirect } from "react-router-dom";
+import {
+  Form,
+  redirect,
+  useActionData,
+  useNavigation,
+  useRouteError,
+} from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 
 // https://uibakery.io/regex-library/phone-number
@@ -37,6 +44,10 @@ function CreateOrder() {
   // const [withPriority, setWithPriority] = useState(false);
   const cart = fakeCart;
 
+  const formErrors = useActionData();
+  const navigation = useNavigation();
+  const isSubmmitting = navigation.state === "submitting";
+
   return (
     <div>
       <h2>Ready to order? Let's go!</h2>
@@ -52,6 +63,7 @@ function CreateOrder() {
           <div>
             <input type="tel" name="phone" required />
           </div>
+          {formErrors?.phone && <p>{formErrors?.phone}</p>}
         </div>
 
         <div>
@@ -73,7 +85,7 @@ function CreateOrder() {
         </div>
 
         <div>
-          <button>Order now</button>
+          <button disabled={isSubmmitting}>Order now</button>
         </div>
 
         <input name="cart" hidden defaultValue={JSON.stringify(cart)}></input>
@@ -88,15 +100,21 @@ export async function action({ request }) {
   const formData = await request.formData();
   const form = Object.fromEntries(formData);
 
-  console.log(form.cart);
-
   const data = {
     ...form,
     cart: JSON.parse(form.cart),
     priority: form.priority === "on",
   };
 
+  console.log(data);
   if (!data) return;
+
+  const errors = {};
+
+  if (!isValidPhone(data.phone)) errors.phone = "The phone number is wrong";
+  console.log(errors);
+
+  if (Object.entries(errors).length > 0) return errors;
 
   const newOrder = await createOrder(data);
   console.log(newOrder);

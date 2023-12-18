@@ -48,9 +48,6 @@ function Order() {
   const order = useLoaderData();
   console.log(order);
 
-  const navigation = useNavigation();
-  const isLoading = navigation.state;
-
   const {
     id,
     status,
