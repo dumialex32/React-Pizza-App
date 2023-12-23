@@ -1,6 +1,6 @@
 function Username() {
   return (
-    <p className="text-xl uppercase font-semibold hidden sm:block">Jonas</p>
+    <p className="text-base uppercase font-semibold hidden sm:block">Jonas</p>
   );
 }
 

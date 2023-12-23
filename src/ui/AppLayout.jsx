@@ -10,7 +10,7 @@ function AppLayout() {
   console.log(isLoading);
 
   return (
-    <div className="flex flex-col">
+    <div className="grid grid-rows-[auto,1fr,auto] h-screen">
       <Header />
       {isLoading ? (
         <Loader />

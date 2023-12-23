@@ -2,43 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
-/* * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+@layer components {
+  .input {
+    @apply: w-60 h-8 text-sm px-3 py-1.5 rounded-full focus:outline-none focus:ring focus:ring-yellow-400 md:w-96 placeholder:text-stone-400;
+  }
 }
-
-html {
-  font-size: 65.5%;
-  font-family: sans-serif;
-}
-
-body {
-  color: #333;
-  line-height: 1;
-}
-
 
 .loader {
   width: 45px;
   aspect-ratio: 0.75;
   --c: no-repeat linear-gradient(#333 0 0);
-  background: var(--c) 0% 50%, var(--c) 50% 50%, var(--c) 100% 50%;
+  background:
+    var(--c) 0% 50%,
+    var(--c) 50% 50%,
+    var(--c) 100% 50%;
   background-size: 20% 50%;
   animation: loading 1s infinite linear;
-} */
+}
 
 @keyframes loading {
   20% {
-    background-position: 0% 0%, 50% 50%, 100% 50%;
+    background-position:
+      0% 0%,
+      50% 50%,
+      100% 50%;
   }
   40% {
-    background-position: 0% 100%, 50% 0%, 100% 50%;
+    background-position:
+      0% 100%,
+      50% 0%,
+      100% 50%;
   }
   60% {
-    background-position: 0% 50%, 50% 100%, 100% 0%;
+    background-position:
+      0% 50%,
+      50% 100%,
+      100% 0%;
   }
   80% {
-    background-position: 0% 50%, 50% 50%, 100% 100%;
+    background-position:
+      0% 50%,
+      50% 50%,
+      100% 100%;
   }
 }
