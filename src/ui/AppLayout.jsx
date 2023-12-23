@@ -10,7 +10,7 @@ function AppLayout() {
   console.log(isLoading);
 
   return (
-    <div>
+    <div className="flex flex-col">
       <Header />
       {isLoading ? (
         <Loader />
