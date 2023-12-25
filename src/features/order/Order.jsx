@@ -61,29 +61,41 @@ function Order() {
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (
-    <div>
-      <div>
-        <h2>Status</h2>
+    <div className="w-full py-4 px-6 space-y-8">
+      <div className="space-y-3 sm:flex gap-4 items-center justify-between">
+        <h2 className="text-lg sm:text-xl ">
+          Order <span className="font-semibold">{id}</span> status
+        </h2>
 
-        <div>
-          {priority && <span>Priority</span>}
-          <span>{status} order</span>
+        <div className="space-x-2">
+          {priority && (
+            <span className="font-semibold bg-red-400 py-1 px-2 rounded-full">
+              Priority
+            </span>
+          )}
+          <span className="font-semibold bg-green-400 py-1 px-2 rounded-full">
+            Order {status}
+          </span>
         </div>
       </div>
 
-      <div>
-        <p>
+      <div className="flex gap-4 items-center justify-between bg-stone-200 p-2">
+        <p className="font-semibold">
           {deliveryIn >= 0
             ? `Only ${calcMinutesLeft(estimatedDelivery)} minutes left 😃`
             : "Order should have arrived"}
         </p>
-        <p>(Estimated delivery: {formatDate(estimatedDelivery)})</p>
+        <p className="text-stone-500">
+          (Estimated delivery: {formatDate(estimatedDelivery)})
+        </p>
       </div>
 
-      <div>
+      <div className="space-y-2 font-semibold">
         <p>Price pizza: {formatCurrency(orderPrice)}</p>
         {priority && <p>Price priority: {formatCurrency(priorityPrice)}</p>}
-        <p>To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}</p>
+        <p className="bg-yellow-400 inline-block py-1 px-2 rounded-lg">
+          To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
+        </p>
       </div>
     </div>
   );

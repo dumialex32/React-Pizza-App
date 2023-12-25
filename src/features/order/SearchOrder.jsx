@@ -15,7 +15,7 @@ function SearchOrder() {
     <div>
       <form onSubmit={handleSubmit}>
         <input
-          className="input"
+          className="input w-64 sm:w-80 md:w-96 md:focus:w-112"
           placeholder="Search order..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}

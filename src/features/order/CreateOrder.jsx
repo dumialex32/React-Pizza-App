@@ -9,11 +9,12 @@ import {
   useRouteError,
 } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
+import Button from "../../ui/Button";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
-    str
+    str,
   );
 
 const fakeCart = [
@@ -49,47 +50,59 @@ function CreateOrder() {
   const isSubmmitting = navigation.state === "submitting";
 
   return (
-    <div>
-      <h2>Ready to order? Let's go!</h2>
+    <div className="flex justify-center">
+      <div className="py-8 px-8 space-y-4 w-42">
+        <h2 className="text-xl font-semibold text-center mb-8">
+          Ready to order? Let's go!
+        </h2>
 
-      <Form method="POST">
-        <div>
-          <label>First Name</label>
-          <input type="text" name="customer" required />
-        </div>
-
-        <div>
-          <label>Phone number</label>
-          <div>
-            <input type="tel" name="phone" required />
+        <Form method="POST" className=" space-y-4">
+          <div className="grid grid-cols-[7rem,1fr] gap-4 items-center">
+            <label className="basis-40">First Name</label>
+            <input type="text" name="customer" required className="input" />
           </div>
-          {formErrors?.phone && <p>{formErrors?.phone}</p>}
-        </div>
 
-        <div>
-          <label>Address</label>
-          <div>
-            <input type="text" name="address" required />
+          <div className="grid grid-cols-[7rem,1fr] gap-4">
+            <label>Phone number</label>
+            <div>
+              <input type="tel" name="phone" required className="input" />
+            </div>
+            {formErrors?.phone && (
+              <p className="input text-center col-start-2 text-red-100 bg-red-500 ">
+                {formErrors?.phone}
+              </p>
+            )}
           </div>
-        </div>
 
-        <div>
-          <input
-            type="checkbox"
-            name="priority"
-            id="priority"
-            // value={withPriority}
-            // onChange={(e) => setWithPriority(e.target.checked)}
-          />
-          <label htmlFor="priority">Want to yo give your order priority?</label>
-        </div>
+          <div className="grid grid-cols-[7rem,1fr] gap-4">
+            <label>Address</label>
+            <div>
+              <input type="text" name="address" required className="input" />
+            </div>
+          </div>
 
-        <div>
-          <button disabled={isSubmmitting}>Order now</button>
-        </div>
+          <div>
+            <input
+              type="checkbox"
+              name="priority"
+              id="priority"
+              // value={withPriority}
+              // onChange={(e) => setWithPriority(e.target.checked)}
+            />
+            <label htmlFor="priority">
+              Want to yo give your order priority?
+            </label>
+          </div>
 
-        <input name="cart" hidden defaultValue={JSON.stringify(cart)}></input>
-      </Form>
+          <div>
+            <Button type="primary" disabled={isSubmmitting}>
+              Order Now
+            </Button>
+          </div>
+
+          <input name="cart" hidden defaultValue={JSON.stringify(cart)}></input>
+        </Form>
+      </div>
     </div>
   );
 }

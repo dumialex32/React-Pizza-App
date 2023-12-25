@@ -1,15 +1,15 @@
-import formatCurrency from "../../utils/helpers";
+import { formatCurrency } from "../../utils/helpers";
 
 function CartItem({ item }) {
   const { pizzaId, name, quantity, totalPrice } = item;
 
   return (
-    <li>
+    <li className="p-2 flex items-center gap-2 justify-between">
       <p>
         {quantity}&times; {name}
       </p>
       <div>
-        <p>{formatCurrency(totalPrice)}</p>
+        <p className="font-semibold">{formatCurrency(totalPrice)}</p>
       </div>
     </li>
   );
