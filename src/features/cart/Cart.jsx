@@ -36,8 +36,8 @@ function Cart() {
       <h2 className="text-xl font-semibold mt-8 mb-2">Your cart</h2>
 
       <ul className="divide-y  divide-stone-200 border-y">
-        {fakeCart.map((item) => (
-          <CartItem key={item.id} item={item} />
+        {cart.map((item) => (
+          <CartItem key={item.pizzaId} item={item} />
         ))}
       </ul>
 
