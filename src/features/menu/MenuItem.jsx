@@ -1,8 +1,33 @@
+/* eslint-disable no-constant-condition */
+import { useDispatch, useSelector } from "react-redux";
 import { formatCurrency } from "../../utils/helpers";
 import Button from "../order/Button";
+import { addItem, getCurrentQuantityById } from "../cart/cartSlice";
+import DeleteItem from "../../ui/DeleteItem";
+import UpdateItem from "../../ui/UpdateItem";
+import { useState } from "react";
 
 function MenuItem({ pizza }) {
+  const [quantity, setQuantity] = useState(1);
+  console.log(quantity);
+
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const dispatch = useDispatch();
+  const currentQuantity = useSelector(getCurrentQuantityById(id));
+  console.log(currentQuantity);
+  const isInCart = currentQuantity > 0;
+
+  function handleAddToCart() {
+    const newItem = {
+      pizzaId: id,
+      name,
+      quantity,
+      unitPrice,
+      totalPrice: unitPrice * quantity,
+    };
+    dispatch(addItem(newItem));
+    console.log("test");
+  }
 
   return (
     <li className="flex gap-4 py-2 items-center">
@@ -18,14 +43,32 @@ function MenuItem({ pizza }) {
         </p>
         <div className="mt-auto flex items-center justify-between">
           {!soldOut ? (
-            <p className="text-sm">{formatCurrency(unitPrice)}</p>
+            <>
+              <div className="flex gap-6 items-centers justify-center">
+                <p className="text-sm">{formatCurrency(unitPrice)}</p>
+              </div>
+            </>
           ) : (
             <p className="text-sm uppercase font-medium text-stone-500">
               Sold out
             </p>
           )}
 
-          <Button type="small">Add to cart</Button>
+          {isInCart ? (
+            <DeleteItem id={id} />
+          ) : (
+            <>
+              {!soldOut && (
+                <Button
+                  type="small"
+                  disabled={soldOut}
+                  onClick={handleAddToCart}
+                >
+                  {soldOut ? "Sold out" : "Add to cart"}
+                </Button>
+              )}
+            </>
+          )}
         </div>
       </div>
     </li>
