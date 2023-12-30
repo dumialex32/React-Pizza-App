@@ -1,5 +1,8 @@
+import { useSelector } from "react-redux";
 import Button from "../../ui/Button";
 import CartItem from "./CartItem";
+import { getUser } from "../user/userSlice";
+import { getCart } from "./cartSlice";
 
 const fakeCart = [
   {
@@ -26,14 +29,16 @@ const fakeCart = [
 ];
 
 function Cart() {
-  const cart = fakeCart;
+  const cart = useSelector(getCart);
+  console.log(cart);
+  const username = useSelector(getUser);
 
   return (
     <div className="px-4 py-3 space-y-4">
       <Button type="link" to="/menu">
         &larr; Back to menu
       </Button>
-      <h2 className="text-xl font-semibold mt-8 mb-2">Your cart</h2>
+      <h2 className="text-xl font-semibold mt-8 mb-2">Your cart, {username}</h2>
 
       <ul className="divide-y  divide-stone-200 border-y">
         {cart.map((item) => (

@@ -1,8 +1,11 @@
+import { useDispatch } from "react-redux";
 import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
+import { addCartItem } from "../cart/cartSlice";
 
 function MenuItem({ pizza }) {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const dispatch = useDispatch();
 
   return (
     <li className="py-3 px-4 flex gap-2 items-center divide-y divide-stone-300">
@@ -15,7 +18,9 @@ function MenuItem({ pizza }) {
         </div>
       </div>
       <div className="border-none ml-auto">
-        <Button type="primary">Add to cart</Button>
+        <Button type="primary" onClick={() => dispatch(addCartItem)}>
+          Add to cart
+        </Button>
       </div>
     </li>
   );

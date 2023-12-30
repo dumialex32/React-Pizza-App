@@ -9,7 +9,7 @@ function Header() {
         to="/"
         className="text-xl sm:text-2xl hover:text-yellow-300 font-semibold"
       >
-        Fast React Pizza
+        %COMPANY NAME
       </Link>
       <SearchOrder />
       <Username />
