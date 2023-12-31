@@ -10,7 +10,6 @@ import { getUser } from "../features/user/userSlice";
 function AppLayout() {
   const navigation = useNavigation();
   const isLoading = navigation.state === "loading";
-  const username = useSelector(getUser);
 
   return (
     <div className="grid grid-rows-[auto,1fr,auto] h-screen">
@@ -22,7 +21,7 @@ function AppLayout() {
           <Outlet />
         </Main>
       )}
-      {username && <CartOverview />}
+      <CartOverview />
     </div>
   );
 }

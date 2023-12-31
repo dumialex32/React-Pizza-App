@@ -1,13 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
 import { formatCurrency } from "../../utils/helpers";
-import { getCart, getQuantityById, removeCartItem } from "./cartSlice";
+import {
+  decreaseItemQuantity,
+  getCart,
+  getQuantityById,
+  increaseItemQuantity,
+  removeCartItem,
+} from "./cartSlice";
 import Button from "../../ui/Button";
+import DeleteItem from "../../ui/DeleteItem";
+import UpdateItemQuantity from "../../ui/UpdateItemQuantity";
 
 function CartItem({ item }) {
   const { pizzaId, name, quantity, totalPrice } = item;
   const dispatch = useDispatch();
-
-  const cart = useSelector(getCart);
+  console.log(totalPrice * quantity);
 
   return (
     <li className="p-2 flex items-center gap-2 justify-between">
@@ -16,18 +23,21 @@ function CartItem({ item }) {
           {quantity}&times; {name}
         </p>
         <div className="flex items-center gap-4">
-          <Button type="round">-</Button>
+          <UpdateItemQuantity
+            onClick={() => dispatch(decreaseItemQuantity(pizzaId))}
+          >
+            -
+          </UpdateItemQuantity>
           <p className="font-semibold">{formatCurrency(totalPrice)}</p>
-          <Button type="round">+</Button>
+          <UpdateItemQuantity
+            onClick={() => dispatch(increaseItemQuantity(pizzaId))}
+          >
+            +
+          </UpdateItemQuantity>
         </div>
       </div>
 
-      <Button
-        type="secondary"
-        onClick={() => dispatch(removeCartItem(pizzaId))}
-      >
-        Delete
-      </Button>
+      <DeleteItem itemId={pizzaId} />
     </li>
   );
 }

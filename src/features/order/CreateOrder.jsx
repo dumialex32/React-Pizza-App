@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 import Button from "../../ui/Button";
+import { useSelector } from "react-redux";
+import { getUser } from "../user/userSlice";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -44,28 +46,41 @@ const fakeCart = [
 function CreateOrder() {
   // const [withPriority, setWithPriority] = useState(false);
   const cart = fakeCart;
-
+  const username = useSelector(getUser);
   const formErrors = useActionData();
   const navigation = useNavigation();
   const isSubmmitting = navigation.state === "submitting";
 
   return (
     <div className="flex justify-center">
-      <div className="py-8 px-8 space-y-4 w-42">
+      <div className="py-8 px-8 space-y-4">
         <h2 className="text-xl font-semibold text-center mb-8">
           Ready to order? Let's go!
         </h2>
 
-        <Form method="POST" className=" space-y-4">
-          <div className="grid grid-cols-[7rem,1fr] gap-4 items-center">
+        <Form method="POST" className="space-y-4">
+          <div className="space-y-2 text-center sm:grid grid-cols-[8rem,1fr] gap-4 sm:items-center">
             <label className="basis-40">First Name</label>
-            <input type="text" name="customer" required className="input" />
+            <div className="w-full">
+              <input
+                type="text"
+                name="customer"
+                defaultValue={username}
+                required
+                className="input w-80 sm:w-96"
+              />
+            </div>
           </div>
 
-          <div className="grid grid-cols-[7rem,1fr] gap-4">
+          <div className="space-y-2 text-center sm:grid grid-cols-[8rem,1fr] gap-4 items-center">
             <label>Phone number</label>
             <div>
-              <input type="tel" name="phone" required className="input" />
+              <input
+                type="tel"
+                name="phone"
+                required
+                className="input w-80 sm:w-full"
+              />
             </div>
             {formErrors?.phone && (
               <p className="input text-center col-start-2 text-red-100 bg-red-500 ">
@@ -74,14 +89,19 @@ function CreateOrder() {
             )}
           </div>
 
-          <div className="grid grid-cols-[7rem,1fr] gap-4">
+          <div className="space-y-2 text-center sm:grid grid-cols-[8rem,1fr] gap-4">
             <label>Address</label>
             <div>
-              <input type="text" name="address" required className="input" />
+              <input
+                type="text"
+                name="address"
+                required
+                className="input w-80 sm:w-full"
+              />
             </div>
           </div>
 
-          <div>
+          <div className="flex items-center gap-4">
             <input
               type="checkbox"
               name="priority"

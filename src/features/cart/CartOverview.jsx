@@ -1,22 +1,29 @@
 import { useSelector } from "react-redux";
 import Button from "../../ui/Button";
-import { getCart } from "./cartSlice";
+import { getCart, getTotalPrice, getTotalQuantity } from "./cartSlice";
 import { formatCurrency } from "../../utils/helpers";
+import { getUser } from "../user/userSlice";
 
 function CartOverview() {
   const cart = useSelector(getCart);
+  const username = useSelector(getUser);
 
-  const totalPrice = cart.reduce((acc, cur) => (acc += cur.unitPrice), 0);
+  const totalPrice = useSelector(getTotalPrice);
+  const totalQuantity = useSelector(getTotalQuantity);
 
   return (
-    <div className="bg-stone-800 text-stone-200 mt-auto px-4 py-3 flex justify-between">
-      <p className="text-stone-300 space-x-4 font-semibold">
-        <span>{cart.length} Pizzas</span>
-        <span>{formatCurrency(totalPrice)}</span>
-      </p>
-      <Button type="link" to="/cart">
-        &larr; Open cart
-      </Button>
+    <div className="h-12 bg-stone-800 text-stone-200 mt-auto px-4 py-3 flex justify-between items-center">
+      {username && (
+        <>
+          <p className="text-stone-300 space-x-4 font-semibold">
+            <span>{totalQuantity} Pizzas</span>
+            <span>{formatCurrency(totalPrice)}</span>
+          </p>
+          <Button type="link" to="/cart">
+            &larr; Open cart
+          </Button>
+        </>
+      )}
     </div>
   );
 }

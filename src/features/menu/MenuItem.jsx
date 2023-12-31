@@ -2,13 +2,19 @@ import { useDispatch, useSelector } from "react-redux";
 import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
 import { addCartItem, getQuantityById } from "../cart/cartSlice";
+import DeleteItem from "../../ui/DeleteItem";
+import { getUser } from "../user/userSlice";
+import { useState } from "react";
+import UpdateItemQuantity from "../../ui/UpdateItemQuantity";
 
 function MenuItem({ pizza }) {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
 
-  const test = useSelector(getQuantityById(id));
-  console.log(test);
+  const quantityById = useSelector(getQuantityById(id));
+  const isInCart = quantityById > 0;
+  const username = useSelector(getUser);
 
   function handleAddItem() {
     console.log("test");
@@ -16,8 +22,8 @@ function MenuItem({ pizza }) {
       pizzaId: id,
       name,
       unitPrice,
-      quantity: 1,
-      totalPrice: unitPrice * 1,
+      quantity: quantity,
+      totalPrice: unitPrice * quantity,
     };
     dispatch(addCartItem(newItem));
   }
@@ -32,18 +38,33 @@ function MenuItem({ pizza }) {
       <div className="p-1 space-y-1">
         <p>{name}</p>
         <p>{ingredients.join(", ")}</p>
-        <div className="font-semibold">
-          {!soldOut ? <p>{formatCurrency(unitPrice)}</p> : <p>Sold out</p>}
-        </div>
+        {!soldOut ? (
+          <div className="flex gap-6">
+            <p>{formatCurrency(unitPrice)}</p>
+            <div className="flex items-center gap-2">
+              <UpdateItemQuantity>-</UpdateItemQuantity>
+              <p>{quantity}</p>
+              <UpdateItemQuantity>+</UpdateItemQuantity>
+            </div>
+          </div>
+        ) : (
+          <p>Sold out</p>
+        )}
       </div>
       <div className="border-none ml-auto">
-        {soldOut ? (
-          ""
-        ) : (
-          <Button type="primary" onClick={handleAddItem}>
-            Add to cart
-          </Button>
-        )}
+        {soldOut
+          ? ""
+          : username && (
+              <>
+                {!isInCart ? (
+                  <Button type="primary" onClick={handleAddItem}>
+                    Add to cart
+                  </Button>
+                ) : (
+                  <DeleteItem itemId={id} />
+                )}
+              </>
+            )}
       </div>
     </li>
   );
