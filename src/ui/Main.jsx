@@ -1,5 +1,5 @@
 function Main({ children }) {
-  return <main className="">{children}</main>;
+  return <main className="overflow-y-scroll">{children}</main>;
 }
 
 export default Main;

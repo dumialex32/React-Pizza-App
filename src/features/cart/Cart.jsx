@@ -30,25 +30,31 @@ const fakeCart = [
 
 function Cart() {
   const cart = useSelector(getCart);
-  console.log(cart);
   const username = useSelector(getUser);
+  console.log(cart);
 
   return (
     <div className="px-4 py-3 space-y-4">
       <Button type="link" to="/menu">
         &larr; Back to menu
       </Button>
-      <h2 className="text-xl font-semibold mt-8 mb-2">Your cart, {username}</h2>
+      {cart.length > 0 && (
+        <div className="space-y-3">
+          <h2 className="text-xl font-semibold mt-8 mb-2">
+            Your cart, {username}
+          </h2>
 
-      <ul className="divide-y  divide-stone-200 border-y">
-        {cart.map((item) => (
-          <CartItem key={item.pizzaId} item={item} />
-        ))}
-      </ul>
+          <ul className="divide-y  divide-stone-200 border-y">
+            {cart?.map((item) => (
+              <CartItem key={item.pizzaId} item={item} />
+            ))}
+          </ul>
 
-      <div>
-        <Button type="secondary">Clear cart</Button>
-      </div>
+          <div>
+            <Button type="secondary">Clear cart</Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

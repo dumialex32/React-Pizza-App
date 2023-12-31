@@ -4,11 +4,13 @@ import CartOverview from "../features/cart/CartOverview";
 import Header from "./Header";
 import Main from "./Main";
 import Loader from "./Loader";
+import { useSelector } from "react-redux";
+import { getUser } from "../features/user/userSlice";
 
 function AppLayout() {
   const navigation = useNavigation();
   const isLoading = navigation.state === "loading";
-  console.log(isLoading);
+  const username = useSelector(getUser);
 
   return (
     <div className="grid grid-rows-[auto,1fr,auto] h-screen">
@@ -20,8 +22,7 @@ function AppLayout() {
           <Outlet />
         </Main>
       )}
-
-      <CartOverview />
+      {username && <CartOverview />}
     </div>
   );
 }
