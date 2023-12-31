@@ -33,12 +33,9 @@ const cartSlice = createSlice({
 });
 
 export const getTotalPrice = (state) =>
-  state.cart.cart.reduce(
-    (acc, cur) => (acc += cur.unitPrice * cur.quantity),
-    0,
-  );
+  state.reduce((acc, cur) => (acc += cur.unitPrice * cur.quantity), 0);
 export const getTotalQuantity = (state) =>
-  state.cart.cart.reduce((acc, cur) => (acc += cur.quantity), 0);
+  state.reduce((acc, cur) => (acc += cur.quantity), 0);
 export const getCart = (state) => state.cart.cart;
 export const getQuantityById = (id) => (state) =>
   state.cart.cart.find((item) => item.pizzaId === id)?.quantity ?? 0;

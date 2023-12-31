@@ -8,8 +8,8 @@ function CartOverview() {
   const cart = useSelector(getCart);
   const username = useSelector(getUser);
 
-  const totalPrice = useSelector(getTotalPrice);
-  const totalQuantity = useSelector(getTotalQuantity);
+  const totalPrice = getTotalPrice(cart);
+  const totalQuantity = getTotalQuantity(cart);
 
   return (
     <div className="h-12 bg-stone-800 text-stone-200 mt-auto px-4 py-3 flex justify-between items-center">
