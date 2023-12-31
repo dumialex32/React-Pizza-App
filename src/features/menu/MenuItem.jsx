@@ -4,7 +4,7 @@ import { formatCurrency } from "../../utils/helpers";
 import Button from "../order/Button";
 import { addItem, getCurrentQuantityById } from "../cart/cartSlice";
 import DeleteItem from "../../ui/DeleteItem";
-import UpdateItem from "../../ui/UpdateItem";
+import UpdateItemQuantity from "../../ui/UpdateItemQuantity";
 import { useState } from "react";
 
 function MenuItem({ pizza }) {

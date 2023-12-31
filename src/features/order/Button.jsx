@@ -13,7 +13,7 @@ function Button({ children, disabled, to, type, onClick }) {
 
     small: `${baseStyles} text-xm md:text-base px-3 py-2 md:px-5 md:py-2.5`,
     disabled: ` text-xm md:text-base px-3 py-2 md:px-5 md:py-2.5 "opacity-70 grayscale`,
-    round: "px-2.5 py-1 md:px-3.5 md:py-2 text-sm",
+    round: baseStyles + "px-2.5 py-1 md:px-3.5 md:py-2 text-sm",
   };
 
   if (to)
