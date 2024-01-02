@@ -6,8 +6,8 @@ import { getTotalPrice, getTotalQuantity } from "./cartSlice";
 function CartOverview() {
   const cart = useSelector((state) => state.cart.cart);
 
-  const totalPrice = getTotalPrice(cart);
-  const totalQuantity = getTotalQuantity(cart);
+  const totalPrice = useSelector(getTotalPrice);
+  const totalQuantity = useSelector(getTotalQuantity);
 
   // const totalPrice = cart.reduce((acc, cur) => (acc += cur.unitPrice), 0);
   // const totalQuantity = cart.reduce((acc, cur) => (acc += cur.quantity), 0); // this is cart logic so it will be placed in the cartSlice.js

@@ -5,7 +5,7 @@ import {
   increaseItemQuantity,
 } from "../features/cart/cartSlice";
 
-function UpdateItemQuantity({ pizzaId }) {
+function UpdateItemQuantity({ pizzaId, quantity }) {
   const dispatch = useDispatch();
   return (
     <div className="flex gap-1 items-center md:gap-3">
@@ -15,6 +15,7 @@ function UpdateItemQuantity({ pizzaId }) {
       >
         -
       </Button>
+      <p>{quantity}</p>
       <Button
         type="round"
         onClick={() => dispatch(increaseItemQuantity(pizzaId))}

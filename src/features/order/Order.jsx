@@ -10,6 +10,8 @@ import {
   formatDate,
 } from "../../utils/helpers";
 import OrderItem from "./OrderItem";
+import { useDispatch, useSelector } from "react-redux";
+import { getCart, clearCart } from "../cart/cartSlice";
 
 const order = {
   id: "ABCDEF",
@@ -48,7 +50,7 @@ const order = {
 
 function Order() {
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
-
+  const dispatch = useDispatch();
   const order = useLoaderData();
 
   const {
@@ -61,6 +63,8 @@ function Order() {
     cart,
   } = order;
   console.log(cart);
+
+  console.log(priority);
 
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
@@ -94,7 +98,7 @@ function Order() {
 
       <ul className="divide-y divide-stone-200 border-y">
         {cart.map((item) => (
-          <OrderItem key={item.div} item={item} />
+          <OrderItem key={item.pizzaId} item={item} />
         ))}
       </ul>
 
@@ -122,5 +126,6 @@ export async function loader({ params }) {
   console.log(params.orderId);
   const order = await getOrder(params.orderId);
   console.log(order);
+
   return order;
 }

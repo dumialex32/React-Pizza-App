@@ -4,7 +4,7 @@ function LinkButton({ children, to }) {
   const navigate = useNavigate();
 
   const buttonClasses =
-    "text-sm text-blue-500 hover:text-blue-600 hover:underline";
+    "text-sm text-blue-500 hover:text-blue-600 hover:border-b border-blue-600";
 
   if (to === "-1")
     return (

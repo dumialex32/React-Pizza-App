@@ -8,25 +8,20 @@ import UpdateItemQuantity from "../../ui/UpdateItemQuantity";
 import { useState } from "react";
 
 function MenuItem({ pizza }) {
-  const [quantity, setQuantity] = useState(1);
-  console.log(quantity);
-
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
   const dispatch = useDispatch();
   const currentQuantity = useSelector(getCurrentQuantityById(id));
-  console.log(currentQuantity);
   const isInCart = currentQuantity > 0;
 
   function handleAddToCart() {
     const newItem = {
       pizzaId: id,
       name,
-      quantity,
+      quantity: 1,
       unitPrice,
-      totalPrice: unitPrice * quantity,
+      totalPrice: unitPrice * 1,
     };
     dispatch(addItem(newItem));
-    console.log("test");
   }
 
   return (
@@ -55,7 +50,10 @@ function MenuItem({ pizza }) {
           )}
 
           {isInCart ? (
-            <DeleteItem id={id} />
+            <div className="flex first-letter items-center gap-3 sm:gap-6">
+              <UpdateItemQuantity pizzaId={id} quantity={currentQuantity} />
+              <DeleteItem id={id} />
+            </div>
           ) : (
             <>
               {!soldOut && (
