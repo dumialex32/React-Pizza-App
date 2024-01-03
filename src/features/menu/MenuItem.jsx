@@ -9,7 +9,7 @@ import UpdateItemQuantity from "../../ui/UpdateItemQuantity";
 
 function MenuItem({ pizza }) {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
-  const [quantity, setQuantity] = useState(1);
+
   const dispatch = useDispatch();
 
   const quantityById = useSelector(getQuantityById(id));
@@ -22,8 +22,8 @@ function MenuItem({ pizza }) {
       pizzaId: id,
       name,
       unitPrice,
-      quantity: quantity,
-      totalPrice: unitPrice * quantity,
+      quantity: 1,
+      totalPrice: unitPrice * 1,
     };
     dispatch(addCartItem(newItem));
   }
@@ -41,11 +41,11 @@ function MenuItem({ pizza }) {
         {!soldOut ? (
           <div className="flex gap-6">
             <p>{formatCurrency(unitPrice)}</p>
-            <div className="flex items-center gap-2">
-              <UpdateItemQuantity>-</UpdateItemQuantity>
-              <p>{quantity}</p>
-              <UpdateItemQuantity>+</UpdateItemQuantity>
-            </div>
+            {isInCart && (
+              <UpdateItemQuantity itemId={id}>
+                {quantityById}
+              </UpdateItemQuantity>
+            )}
           </div>
         ) : (
           <p>Sold out</p>

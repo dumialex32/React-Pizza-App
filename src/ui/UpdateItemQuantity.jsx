@@ -1,11 +1,29 @@
 import { useDispatch } from "react-redux";
 import Button from "./Button";
+import {
+  decreaseItemQuantity,
+  increaseItemQuantity,
+} from "../features/cart/cartSlice";
 
-function UpdateItemQuantity({ children, onClick }) {
+function UpdateItemQuantity({ children, itemId }) {
+  const dispatch = useDispatch();
+
   return (
-    <Button type="round" onClick={onClick}>
-      {children}
-    </Button>
+    <div className="flex gap-3">
+      <Button
+        type="round"
+        onClick={() => dispatch(decreaseItemQuantity(itemId))}
+      >
+        -
+      </Button>
+      <p>{children}</p>
+      <Button
+        type="round"
+        onClick={() => dispatch(increaseItemQuantity(itemId))}
+      >
+        +
+      </Button>
+    </div>
   );
 }
 

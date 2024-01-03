@@ -13,8 +13,6 @@ import UpdateItemQuantity from "../../ui/UpdateItemQuantity";
 
 function CartItem({ item }) {
   const { pizzaId, name, quantity, totalPrice } = item;
-  const dispatch = useDispatch();
-  console.log(totalPrice * quantity);
 
   return (
     <li className="p-2 flex items-center gap-2 justify-between">
@@ -23,17 +21,7 @@ function CartItem({ item }) {
           {quantity}&times; {name}
         </p>
         <div className="flex items-center gap-4">
-          <UpdateItemQuantity
-            onClick={() => dispatch(decreaseItemQuantity(pizzaId))}
-          >
-            -
-          </UpdateItemQuantity>
-          <p className="font-semibold">{formatCurrency(totalPrice)}</p>
-          <UpdateItemQuantity
-            onClick={() => dispatch(increaseItemQuantity(pizzaId))}
-          >
-            +
-          </UpdateItemQuantity>
+          <UpdateItemQuantity itemId={pizzaId}>{quantity}</UpdateItemQuantity>
         </div>
       </div>
 
