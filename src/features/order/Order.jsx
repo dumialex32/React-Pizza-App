@@ -1,12 +1,15 @@
 // Test ID: IIDSAT
 
-import { useLoaderData, useNavigation } from "react-router-dom";
+import { useFetcher, useLoaderData, useNavigation } from "react-router-dom";
 import { getOrder } from "../../services/apiRestaurant";
 import {
   calcMinutesLeft,
   formatCurrency,
   formatDate,
 } from "../../utils/helpers";
+import UpdatePriority from "./UpdatePriority";
+import OrderItem from "./OrderItem";
+import { useEffect } from "react";
 
 const order = {
   id: "ABCDEF",
@@ -47,6 +50,13 @@ function Order() {
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
   const order = useLoaderData();
   console.log(order);
+  // const fetcher = useFetcher();
+
+  // console.log(fetcher);
+
+  // useEffect(() => {
+  //   fetcher.load("/menu");
+  // }, [fetcher]);
 
   const {
     id,
@@ -79,7 +89,13 @@ function Order() {
         </div>
       </div>
 
-      <div className="flex gap-4 items-center justify-between bg-stone-200 p-2">
+      <ul className="divide-y border-y">
+        {cart.map((pizza) => (
+          <OrderItem key={pizza.pizzaId} pizza={pizza} />
+        ))}
+      </ul>
+
+      <div className="flex gap-4 items-center justify-between bg-stone-200 py-2 px-4">
         <p className="font-semibold">
           {deliveryIn >= 0
             ? `Only ${calcMinutesLeft(estimatedDelivery)} minutes left 😃`
@@ -90,13 +106,16 @@ function Order() {
         </p>
       </div>
 
-      <div className="space-y-2 font-semibold">
-        <p>Price pizza: {formatCurrency(orderPrice)}</p>
-        {priority && <p>Price priority: {formatCurrency(priorityPrice)}</p>}
-        <p className="bg-yellow-400 inline-block py-1 px-2 rounded-lg">
-          To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
-        </p>
+      <div className="flex items-center gap-2 justify-between py-2 px-4  font-semibold bg-stone-200">
+        <div>
+          <p>Price pizza: {formatCurrency(orderPrice)}</p>
+          {priority && <p>Price priority: {formatCurrency(priorityPrice)}</p>}
+        </div>
+        {!priority && <UpdatePriority />}
       </div>
+      <p className="bg-yellow-400 inline-block py-1 px-2 rounded-lg">
+        To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
+      </p>
     </div>
   );
 }
@@ -104,10 +123,9 @@ function Order() {
 export default Order;
 
 export async function loader({ params }) {
-  console.log(params);
   const id = params.orderId;
   if (!id) return;
   const order = await getOrder(id);
-  console.log(order);
+
   return order;
 }

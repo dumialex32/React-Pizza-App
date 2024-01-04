@@ -17,7 +17,7 @@ function MenuItem({ pizza }) {
   const username = useSelector(getUser);
 
   function handleAddItem() {
-    console.log("test");
+  
     const newItem = {
       pizzaId: id,
       name,

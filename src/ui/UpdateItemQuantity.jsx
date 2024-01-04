@@ -16,7 +16,7 @@ function UpdateItemQuantity({ children, itemId }) {
       >
         -
       </Button>
-      <p>{children}</p>
+      <p className="font-semibold">{children}</p>
       <Button
         type="round"
         onClick={() => dispatch(increaseItemQuantity(itemId))}

@@ -21,6 +21,7 @@ function CartItem({ item }) {
           {quantity}&times; {name}
         </p>
         <div className="flex items-center gap-4">
+          <p>{formatCurrency(totalPrice)}</p>
           <UpdateItemQuantity itemId={pizzaId}>{quantity}</UpdateItemQuantity>
         </div>
       </div>

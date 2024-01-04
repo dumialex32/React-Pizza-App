@@ -10,6 +10,7 @@ export default {
       width: {
         112: "28rem",
         42: "42rem",
+        45: "45rem",
       },
       height: {
         screen: "100dvh",

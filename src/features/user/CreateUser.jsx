@@ -11,7 +11,6 @@ function CreateUser() {
   const user = useSelector(getUser);
 
   function handleSubmit(e) {
-    console.log("test");
     e.preventDefault();
     dispatch(createUsername(username));
     navigate("/menu");
